@@ -41,6 +41,6 @@ public class UserService {
     }
 
     public UserEntity findById(Integer id) {
-       return findById(id);
+        return userEntityRepository.findById(id).orElse(null);
     }
 }
