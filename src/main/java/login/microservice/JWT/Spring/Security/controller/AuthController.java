@@ -1,5 +1,6 @@
 package login.microservice.JWT.Spring.Security.controller;
 
+import login.microservice.JWT.Spring.Security.config.jwt.JwtFilter;
 import login.microservice.JWT.Spring.Security.config.jwt.JwtProvider;
 import login.microservice.JWT.Spring.Security.entity.UserEntity;
 import login.microservice.JWT.Spring.Security.service.UserService;
@@ -18,6 +19,8 @@ public class AuthController {
     private UserService userService;
     @Autowired
     private JwtProvider jwtProvider;
+    @Autowired
+    private JwtFilter jwtFilter;
 
     @PostMapping("/register")
     public String registerUser(@RequestBody @Valid RegistrationRequest registrationRequest) {
@@ -32,7 +35,18 @@ public class AuthController {
     @PostMapping("/authenticate")
     public AuthResponse auth(@RequestBody AuthRequest request) {
         UserEntity userEntity = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
-        String token = jwtProvider.generateToken(userEntity.getLogin());
+        String token = jwtProvider.generateToken(userEntity.getId());
         return new AuthResponse(token);
     }
+
+  /*  @GetMapping("/currentuser")
+    public JSONObject getId() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", jwtProvider.getLoginFromToken(jwtFilter.getTokenFromRequest((HttpServletRequest)) );
+
+
+        return jsonObject;
+    }
+
+   */
 }

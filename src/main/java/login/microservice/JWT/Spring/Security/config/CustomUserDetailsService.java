@@ -18,4 +18,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserEntity userEntity = userService.findByLogin(username);
         return CustomUserDetails.fromUserEntityToCustomUserDetails(userEntity);
     }
+
+
+    public CustomUserDetails loadUserById(Integer id) throws UsernameNotFoundException{
+        UserEntity userEntity = userService.findById(id);
+        return CustomUserDetails.fromUserEntityToCustomUserDetails(userEntity);
+    }
 }

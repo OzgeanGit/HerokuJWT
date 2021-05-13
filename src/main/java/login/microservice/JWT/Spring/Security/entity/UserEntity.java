@@ -30,10 +30,10 @@ public class UserEntity {
     @JoinColumn(name = "role_id")
     private RoleEntity roleEntity;
 
-   /* public Integer getId() {
+    public Integer getId() {
         return id;
     }
-
+/*
     public void setId(Integer id) {
         this.id = id;
     }

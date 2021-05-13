@@ -39,4 +39,8 @@ public class UserService {
         }
         return null;
     }
+
+    public UserEntity findById(Integer id) {
+       return findById(id);
+    }
 }
