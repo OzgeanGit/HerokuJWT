@@ -1,0 +1,13 @@
+jwt:
+  secret: eLearning
+spring:
+  datasource:
+    password: ${DB_PASSWORD:}
+    url: ${DB_URL:jdbc:h2:~/LMSTest}
+    username: ${DB_USER:sa}
+  h2:
+    console:
+      enabled: true
+server:
+  port: 8089
+
