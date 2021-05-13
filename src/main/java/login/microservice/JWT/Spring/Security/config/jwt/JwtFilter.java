@@ -14,7 +14,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static org.springframework.util.StringUtils.hasText;
@@ -31,7 +30,8 @@ public class JwtFilter extends GenericFilterBean {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    public void doFilter(ServletRequest servletRequest, HttpServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
        //logger.info("do filter..."); //adauga header in serverResponse
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
         logger.info("do filter...valid = "+jwtProvider.validateToken(token));
@@ -45,7 +45,7 @@ public class JwtFilter extends GenericFilterBean {
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             logger.info("auth = "+ auth.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
-            servletResponse.addHeader("id", userId.toString());
+           // servletResponse.addHeader("id", userId.toString());
 
 
 
@@ -61,8 +61,5 @@ public class JwtFilter extends GenericFilterBean {
         return null;
     }
 
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-    }
 }
