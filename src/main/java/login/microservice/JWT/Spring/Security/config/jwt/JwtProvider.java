@@ -19,7 +19,7 @@ public class JwtProvider {
 
     public String generateToken(Integer id) {
       // Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date date = new Date(System.currentTimeMillis()+100_000);
+        Date date = new Date(System.currentTimeMillis()+500_000_000);
         return Jwts.builder()
                 .setSubject(id.toString())
                 .setExpiration(date)
