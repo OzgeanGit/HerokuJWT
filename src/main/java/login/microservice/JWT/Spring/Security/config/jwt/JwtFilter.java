@@ -46,8 +46,9 @@ public class JwtFilter extends GenericFilterBean {
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             logger.info("auth = "+ auth.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
-            if(((HttpServletResponse)servletResponse).getHeader("current-user")==null)
-            ((HttpServletResponse)servletResponse).addHeader("current-user", userId.toString());
+            if(((HttpServletResponse)servletResponse).getHeader("x-current-user")==null)
+            ((HttpServletResponse)servletResponse).addHeader("x-current-user", userId.toString());
+
 
 
 

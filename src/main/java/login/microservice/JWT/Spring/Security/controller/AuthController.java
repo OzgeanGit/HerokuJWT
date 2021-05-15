@@ -44,7 +44,7 @@ public class AuthController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", jwtProvider.getLoginFromToken(jwtFilter.getTokenFromRequest((HttpServletRequest)) );
 
-
+ SAU EntityResponse
         return jsonObject;
     }
 
