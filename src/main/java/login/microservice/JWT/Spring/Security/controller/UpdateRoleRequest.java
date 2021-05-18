@@ -3,8 +3,8 @@ import lombok.Data;
     @Data
     public class UpdateRoleRequest {
 
-        private String login;
-
+        private Integer id;
+        private String name;
         private String role;
 
 
