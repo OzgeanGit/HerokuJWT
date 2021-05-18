@@ -1,24 +1,19 @@
 package login.microservice.JWT.Spring.Security.controller;
 
-import login.microservice.JWT.Spring.Security.config.CustomUserDetails;
 import login.microservice.JWT.Spring.Security.config.CustomUserDetailsService;
-import login.microservice.JWT.Spring.Security.config.jwt.JwtFilter;
 import login.microservice.JWT.Spring.Security.config.jwt.JwtProvider;
 import login.microservice.JWT.Spring.Security.entity.UserEntity;
 import login.microservice.JWT.Spring.Security.repository.UserEntityRepository;
 import login.microservice.JWT.Spring.Security.service.UserService;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping(path="/auth")
@@ -30,25 +25,10 @@ public class AuthController {
     @Autowired
     private JwtProvider jwtProvider;
     @Autowired
-    private JwtFilter jwtFilter;
-    @Autowired
     private UserEntityRepository userEntityRepository;
-   // @PostMapping("/register/{role}")
 
-   /* public String registerUserWithRole(@RequestBody @Valid RegistrationRequest registrationRequest, @RequestParam RequestParam role) {
-        UserEntity u = new UserEntity();
-        u.setPassword(registrationRequest.getPassword());
-        u.setLogin(registrationRequest.getLogin());
-        // u.setRoleEntity(registrationRequest.);
-        userService.saveUser(u);
-        UserEntity userEntity = userService.updateRoleUser(registrationRequest.getLogin(), role.toString());
-        return "OK";
-    }
-    */
-   @GetMapping(path = "/hello")
-   public JSONObject sayHello() throws JSONException {
-       return new JSONObject("{'aa':'bb'}");
-   }
+
+
     @PostMapping("/register")
     public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user) {
         if (user.getId() != null && userEntityRepository.findById(user.getId()).isPresent())
@@ -59,29 +39,6 @@ public class AuthController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).body(createdUser);
-    }
-    @GetMapping("/getroles")
-    public HashMap getCurrentUser(@RequestHeader("Authorization") String auths) {
-        Integer userId = jwtProvider.getLoginFromToken(auths.substring(7));
-        CustomUserDetails customUserDetails = customUserDetailsService.loadUserById(userId);
-
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-        Map map = new HashMap();
-        map.put("username", auth.getName());
-        map.put("role", auth.getAuthorities());
-        map.put("id", userService.findByLogin(auth.getName()).getId());
-        return (HashMap) map;
-    }
-
-    public String registerUser(@RequestBody @Valid RegistrationRequest registrationRequest) {
-        UserEntity u = new UserEntity();
-        u.setPassword(registrationRequest.getPassword());
-        u.setLogin(registrationRequest.getLogin());
-       // u.setRoleEntity(registrationRequest.);
-      // u.getRoleEntity().getName();
-        userService.saveUser(u);
-       return u.getRoleEntity().getName();
-        //+ intoarce json cu login si role
     }
 
     @PostMapping("/authenticate")
