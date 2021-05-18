@@ -40,6 +40,20 @@ public class UserService {
         return null;
     }
 
+    public UserEntity updateRoleUser(String login, String roleName){
+        UserEntity userEntity = findByLogin(login);
+        System.out.println(userEntity.getId());
+        // logger.info("");
+        if (userEntity != null) {
+            RoleEntity userRole = roleEntityRepository.findByName("ROLE_"+roleName.toUpperCase().trim());
+            System.out.println(userRole.getId()+ userRole.getName());
+            userEntity.setRoleEntity(userRole);
+            return userEntityRepository.save(userEntity);
+
+        }
+        return null;
+    }
+
     public UserEntity findById(Integer id) {
         return userEntityRepository.findById(id).orElse(null);
     }
