@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path="/permission")
 public class TestSecurityController {
 
+
+
     @GetMapping("/admin")
     public String getAdmin() {
         return "Hi admin!";
@@ -22,4 +24,5 @@ public class TestSecurityController {
     public String getProfessor() {
         return "Hi Professor!";
     }
+
 }

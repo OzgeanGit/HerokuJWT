@@ -1,15 +1,10 @@
 package login.microservice.JWT.Spring.Security.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user_table")
@@ -45,15 +40,16 @@ public class UserEntity {
     public void setLogin(String login) {
         this.login = login;
     }
-
+*/
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
-
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
-
+/*
     public RoleEntity getRoleEntity() {
         return roleEntity;
     }

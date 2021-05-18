@@ -1,5 +1,7 @@
 package login.microservice.JWT.Spring.Security.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -16,19 +18,20 @@ public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
 
     @Column
     private String name;
-
-    /*public Integer getId() {
+    @JsonIgnore
+    public Integer getId() {
         return id;
     }
-
+    @JsonProperty
     public void setId(Integer id) {
         this.id = id;
     }
-
+/*
     public String getName() {
         return name;
     }

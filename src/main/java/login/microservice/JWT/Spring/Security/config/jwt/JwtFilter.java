@@ -5,6 +5,7 @@ import login.microservice.JWT.Spring.Security.config.CustomUserDetailsService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
@@ -16,6 +17,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 
 import static org.springframework.util.StringUtils.hasText;
 
@@ -46,6 +48,7 @@ public class JwtFilter extends GenericFilterBean {
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             logger.info("auth = "+ auth.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
+            Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)SecurityContextHolder.getContext().getAuthentication().getAuthorities();
             if(((HttpServletResponse)servletResponse).getHeader("x-current-user")==null)
             ((HttpServletResponse)servletResponse).addHeader("x-current-user", userId.toString());
 
