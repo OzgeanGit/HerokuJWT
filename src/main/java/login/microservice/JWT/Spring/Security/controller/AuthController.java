@@ -1,5 +1,7 @@
 package login.microservice.JWT.Spring.Security.controller;
 
+import login.microservice.JWT.Spring.Security.config.CustomUserDetails;
+import login.microservice.JWT.Spring.Security.config.CustomUserDetailsService;
 import login.microservice.JWT.Spring.Security.config.jwt.JwtFilter;
 import login.microservice.JWT.Spring.Security.config.jwt.JwtProvider;
 import login.microservice.JWT.Spring.Security.entity.UserEntity;
@@ -9,20 +11,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
-
-
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Collection;
 
 @RestController
 @RequestMapping(path="/auth")
 public class AuthController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
     @Autowired
     private JwtProvider jwtProvider;
     @Autowired
@@ -56,6 +60,14 @@ public class AuthController {
                 .path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).body(createdUser);
     }
+    @GetMapping("/getroles")
+    public Collection<GrantedAuthority> getCurrentUser(@RequestHeader("Authorization") String auths) {
+        Integer userId = jwtProvider.getLoginFromToken(auths.substring(7));
+        CustomUserDetails customUserDetails = customUserDetailsService.loadUserById(userId);
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+        return auth.getAuthorities();
+    }
+
     public String registerUser(@RequestBody @Valid RegistrationRequest registrationRequest) {
         UserEntity u = new UserEntity();
         u.setPassword(registrationRequest.getPassword());

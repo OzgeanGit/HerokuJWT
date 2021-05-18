@@ -17,6 +17,7 @@ public class JwtProvider {
     @Value("$(jwt.secret)")
     private String jwtSecret;
 
+
     public String generateToken(Integer id) {
       // Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date date = new Date(System.currentTimeMillis()+500_000_000);
