@@ -26,7 +26,7 @@ public class UserController {
     private CustomUserDetailsService customUserDetailsService;
     @Autowired
     private UserEntityRepository userEntityRepository;
-    @GetMapping("/getroles")
+    @GetMapping("/get")
     public HashMap getCurrentUser(@RequestHeader("Authorization") String auths) {
         Integer userId = jwtProvider.getLoginFromToken(auths.substring(7));
         CustomUserDetails customUserDetails = customUserDetailsService.loadUserById(userId);
