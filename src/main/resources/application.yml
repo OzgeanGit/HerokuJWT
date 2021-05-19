@@ -10,4 +10,7 @@ spring:
       enabled: true
 server:
   port: 8089
+java:
+  runtime:
+    version: 11
 
