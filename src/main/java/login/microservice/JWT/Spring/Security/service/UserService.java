@@ -45,7 +45,7 @@ public class UserService {
         return null;
     }
 
-    public UserEntity updateRoleUser(Integer id, String name, String roleName){
+    public UserEntity updateRoleUser(Integer id, String name, String roleName, String year, String grupa){
         UserEntity userEntity = findById(id);
         System.out.println(userEntity.getId());
         // logger.info("");
@@ -54,6 +54,8 @@ public class UserService {
             System.out.println(userRole.getId()+ userRole.getName());
             userEntity.setRoleEntity(userRole);
             userEntity.setLogin(name);
+            userEntity.setYear(year);
+            userEntity.setGrupa(grupa);
             return userEntityRepository.save(userEntity);
 
         }

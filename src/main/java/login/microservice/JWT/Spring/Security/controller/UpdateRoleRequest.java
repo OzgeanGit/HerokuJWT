@@ -4,8 +4,10 @@ import lombok.Data;
     public class UpdateRoleRequest {
 
         private Integer id;
-        private String name;
+        private String login;
         private String role;
+        private String grupa;
+        private String year;
 
 
     }

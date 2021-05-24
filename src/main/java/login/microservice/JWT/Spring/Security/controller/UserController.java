@@ -46,17 +46,39 @@ public class UserController {
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(foundUser.get());
     }
+    @GetMapping( "/group/{group}")
+    public ResponseEntity<Iterable<UserEntity>> listUserByGroup(@PathVariable String group)
+    {
+        Iterable<UserEntity> foundUsers = userEntityRepository.findByGrupa(group);
+        return ResponseEntity.ok(foundUsers);
+    }
+
+
+    @GetMapping( "/year/{year}")
+    public ResponseEntity<Iterable<UserEntity>> listUserByYear(@PathVariable String year)
+    {
+        Iterable<UserEntity> foundUsers = userEntityRepository.findByYear(year);
+        return ResponseEntity.ok(foundUsers);
+    }
+
+    @GetMapping( "/year/{year}/group/{group}")
+    public ResponseEntity<Iterable<UserEntity>> listUserByYearAndGroup(@PathVariable String year, @PathVariable String group)
+    {
+        Iterable<UserEntity> foundUsers = userEntityRepository.findByGrupaAndYear(group,year);
+        return ResponseEntity.ok(foundUsers);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<Iterable<UserEntity>> listAllUsers()
     {
-        Iterable<UserEntity> foundTasks = userEntityRepository.findAll();
-        return ResponseEntity.ok(foundTasks);
+        Iterable<UserEntity> foundUsers = userEntityRepository.findAll();
+        return ResponseEntity.ok(foundUsers);
     }
 
 
     @PutMapping("/update")
     public UserEntity updateRole(@RequestBody UpdateRoleRequest request) {
-        return userService.updateRoleUser(request.getId(),request.getName(), request.getRole());
+        return userService.updateRoleUser(request.getId(),request.getLogin(), request.getRole(), request.getYear(), request.getGrupa());
 
         //find login from the request
         //find the id for the role from request

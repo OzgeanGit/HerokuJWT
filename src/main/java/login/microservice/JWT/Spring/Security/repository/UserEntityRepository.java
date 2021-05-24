@@ -7,4 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface UserEntityRepository extends JpaRepository<UserEntity, Integer>, CrudRepository<UserEntity, Integer> {
 
     UserEntity findByLogin(String login);
+    Iterable<UserEntity> findByGrupa(String grupa);
+    Iterable<UserEntity> findByYear(String year);
+    Iterable<UserEntity> findByGrupaAndYear(String grupa, String year);
 }

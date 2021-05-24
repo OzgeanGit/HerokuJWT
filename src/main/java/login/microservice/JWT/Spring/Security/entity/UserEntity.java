@@ -7,7 +7,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user_table")
+@Table(name = "USER_TABLE")
 @Data
 public class UserEntity {
 
@@ -20,6 +20,13 @@ public class UserEntity {
 
     @Column
     private String password;
+
+    @Column
+    private String grupa;
+
+    @Column
+    private String year;
+
 
     @ManyToOne
     @JoinColumn(name = "role_id")
@@ -57,5 +64,6 @@ public class UserEntity {
     public void setRoleEntity(RoleEntity roleEntity) {
         this.roleEntity = roleEntity;
     }*/
+
 }
 
